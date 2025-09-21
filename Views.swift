@@ -2056,11 +2056,6 @@ struct MazeAlgorithmDetailView: View {
 
 struct AuthorCard: View {
     @Binding var isHovered: Bool
-    @State private var selectedSection: AuthorSection? = nil
-    
-    enum AuthorSection: String {
-        case education = "Education"
-    }
     
     var body: some View {
         VStack(alignment: .leading, spacing: 16) {
@@ -2088,33 +2083,6 @@ struct AuthorCard: View {
                 RoundedRectangle(cornerRadius: 16)
                     .fill(Color.blue.opacity(isHovered ? 0.15 : 0.1))
             )
-            
-            // Section Button
-            Button(action: {
-                withAnimation(.spring()) {
-                    selectedSection = selectedSection == .education ? nil : .education
-                }
-            }) {
-                Text("Education")
-                    .font(.subheadline)
-                    .padding(.horizontal, 12)
-                    .padding(.vertical, 8)
-                    .background(
-                        RoundedRectangle(cornerRadius: 8)
-                            .fill(selectedSection == .education ? 
-                                 Color.blue : Color.blue.opacity(0.1))
-                    )
-                    .foregroundColor(selectedSection == .education ? .white : .blue)
-            }
-            
-            // Education Content
-            if selectedSection == .education {
-                EducationView()
-                    .transition(.move(edge: .top).combined(with: .opacity))
-                    .padding()
-                    .background(Color.blue.opacity(0.05))
-                    .cornerRadius(12)
-            }
         }
         .padding(20)
         .background(
@@ -2131,23 +2099,6 @@ struct AuthorCard: View {
     }
 }
 
-// Supporting Views
-extension AuthorCard.AuthorSection: CaseIterable {}
-
-struct EducationView: View {
-    var body: some View {
-        VStack(alignment: .leading, spacing: 8) {
-            Label("Galgotias University, Greater Noida", systemImage: "building.columns.fill")
-                .font(.headline)
-            Text("B.Tech in Computer Science & Engineering")
-                .font(.subheadline)
-                .foregroundColor(.secondary)
-            Text("Specialization in AI & ML (2022-2026)")
-                .font(.subheadline)
-                .foregroundColor(.secondary)
-        }
-    }
-}
 
 
 struct PropertyCard: View {
